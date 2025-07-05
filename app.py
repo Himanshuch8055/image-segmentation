@@ -9,7 +9,7 @@ import gradio as gr
 
 # ─── Configuration ─────────────────────────────────────────
 CONFIG = {
-    "model_path": "./trained-models/amalesh_encoder_resnet34_decoder_UnetPlusPlus_fibril_seg_model.pth",
+    "model_path": "./model/encoder_resnet34_decoder_UnetPlusPlus_fibril_seg_model.pth",
     "img_size": 512
 }
 
