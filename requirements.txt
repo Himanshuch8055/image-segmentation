@@ -1,0 +1,5 @@
+torch
+gradio
+albumentations
+segmentation-models-pytorch
+Pillow
