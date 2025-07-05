@@ -9,7 +9,7 @@ import gradio as gr
 
 # ─── Configuration ─────────────────────────────────────────
 CONFIG = {
-    "model_path": "./model/encoder_resnet34_decoder_UnetPlusPlus_fibril_seg_model.pth",
+    "model_path": "./trained-models/amalesh_encoder_resnet34_decoder_UnetPlusPlus_fibril_seg_model.pth",
     "img_size": 512
 }
 
@@ -46,7 +46,7 @@ transform = get_transform(CONFIG["img_size"])
 
 # ─── Prediction Function ───────────────────────────────────
 def predict(image):
-    image = image.convert("L")  # Grayscale
+    image = image.convert("L")  # Convert to grayscale
     img_np = np.array(image)
     img_tensor = transform(image=img_np)["image"].unsqueeze(0).to(device)
 
@@ -55,20 +55,16 @@ def predict(image):
         mask = (pred > 0.5).float().cpu().squeeze().numpy()
 
     mask_img = Image.fromarray((mask * 255).astype(np.uint8))
-    return image, mask_img
+    return mask_img
 
 # ─── Gradio Interface ──────────────────────────────────────
 demo = gr.Interface(
     fn=predict,
     inputs=gr.Image(type="pil", label="Upload Microscopy Image"),
-    outputs=[
-        gr.Image(type="pil", label="Original Image"),
-        gr.Image(type="pil", label="Predicted Mask"),
-    ],
+    outputs=gr.Image(type="pil", label="Predicted Segmentation Mask"),
     title="Fibril Segmentation with Unet++",
     description="Upload a grayscale microscopy image to get its predicted segmentation mask."
 )
 
-# ─── Launch Gradio App ─────────────────────────────────────
 if __name__ == "__main__":
     demo.launch()
