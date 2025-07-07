@@ -134,16 +134,22 @@ example_images = [
 
 # ─── Custom CSS ───────────────────────────────────────────
 custom_css = """
-#output-image {
+#output-image, #input-image {
     margin: 0 auto;
     max-height: 60vh;
     width: 100%;
+    border-radius: 8px;
 }
+
 .processing-info {
     font-size: 0.9em;
     color: #666;
     margin-top: 10px;
+    padding: 8px;
+    background: #f8f9fa;
+    border-radius: 4px;
 }
+
 .upload-box {
     min-height: 200px;
     border: 2px dashed #666;
@@ -152,6 +158,32 @@ custom_css = """
     align-items: center;
     justify-content: center;
     padding: 20px;
+}
+
+/* Style for group containers */
+.gr-group {
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Button styles */
+button {
+    border-radius: 6px !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .gr-row {
+        flex-direction: column;
+    }
+    
+    .gr-column {
+        width: 100% !important;
+    }
 }
 """
 
@@ -173,12 +205,14 @@ with gr.Blocks(theme=theme, css=custom_css) as demo:
     
     with gr.Row():
         with gr.Column():
-            with gr.Box():
+            # Input Section with Card-like Styling
+            with gr.Group():
                 gr.Markdown("### 🖼️ Input Image")
                 input_image = gr.Image(
                     type="pil",
                     label="Upload Image",
-                    elem_id="input-image"
+                    elem_id="input-image",
+                    height=300
                 )
                 
                 with gr.Row():
@@ -193,6 +227,7 @@ with gr.Blocks(theme=theme, css=custom_css) as demo:
                     
                     submit_btn = gr.Button("Segment Image 🚀", variant="primary")
             
+            # How to Use Section
             with gr.Accordion("ℹ️ How to use", open=False):
                 gr.Markdown("""
                 1. Upload a microscopy image or use one of the examples below
@@ -201,6 +236,7 @@ with gr.Blocks(theme=theme, css=custom_css) as demo:
                 4. View the results side-by-side (original | segmented)
                 """)
             
+            # Model Information Section
             with gr.Accordion("📊 Model Information", open=False):
                 gr.Markdown(f"""
                 - **Model**: UNet++ with ResNet34 encoder
@@ -209,19 +245,22 @@ with gr.Blocks(theme=theme, css=custom_css) as demo:
                 - **Normalization**: Mean=0.5, Std=0.5
                 """)
         
+        # Results Section
         with gr.Column():
-            gr.Markdown("### 🔍 Segmentation Result")
-            output_image = gr.Image(
-                type="pil",
-                label="Segmentation Result",
-                elem_id="output-image"
-            )
-            
-            with gr.Row():
-                download_btn = gr.Button("⬇️ Download Result")
-                clear_btn = gr.Button("🔄 Clear")
-            
-            info_text = gr.Markdown("", elem_classes="processing-info")
+            with gr.Group():
+                gr.Markdown("### 🔍 Segmentation Result")
+                output_image = gr.Image(
+                    type="pil",
+                    label="Segmentation Result",
+                    elem_id="output-image",
+                    height=400
+                )
+                
+                with gr.Row():
+                    download_btn = gr.Button("⬇️ Download Result")
+                    clear_btn = gr.Button("🔄 Clear")
+                
+                info_text = gr.Markdown("", elem_classes="processing-info")
     
     # Example images
     gr.Markdown("### 🧪 Example Images")
