@@ -33,3 +33,25 @@ saved_model/**/* filter=lfs diff=lfs merge=lfs -text
 *.zip filter=lfs diff=lfs merge=lfs -text
 *.zst filter=lfs diff=lfs merge=lfs -text
 *tfevents* filter=lfs diff=lfs merge=lfs -text
+git lfs track "*.tiff"
+git lfs track "*.tif"
+git lfs track "*.dag"
+git lfs track "*.png"
+git lfs track "*.jpg"
+git lfs track "*.jpeg"
+git lfs track "*.bmp"
+git lfs track "*.gif"
+git lfs track "*.mp4"
+git lfs track "*.mov"
+git lfs track "*.avi"
+git lfs track "*.zip"
+git lfs track "*.tar"
+git lfs track "*.gz"
+git lfs track "*.h5"
+git lfs track "*.ckpt"
+git lfs track "*.pt"
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+examples/example1.jpg filter=lfs diff=lfs merge=lfs -text
+examples/example2.jpg filter=lfs diff=lfs merge=lfs -text
+examples/example3.jpg filter=lfs diff=lfs merge=lfs -text
